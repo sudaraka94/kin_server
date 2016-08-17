@@ -1,10 +1,10 @@
 <?php
 //here goes the db access layer
 function connect_db(){
-	$server='localhost';
-	$user='root';
-	$password='19940829';
-	$database='kin';
+	$server='db4free.net';
+	$user='kinteam';
+	$password='kinserver';
+	$database='kindb';
 	$connection=new mysqli($server,$user,$password,$database);
 	return 	$connection;
 
