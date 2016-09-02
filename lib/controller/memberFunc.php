@@ -27,7 +27,7 @@ function login($user,$pass){
 	if ($password){
 		$data=$password->fetch_array(MYSQLI_ASSOC);
 		if($data['password']==$pass){
-			return json_encode("true");
+			return 'true';
 		}
 		else{
 			return json_encode('invalid credentials');
