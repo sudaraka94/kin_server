@@ -13,10 +13,7 @@ function add_item($user,$Jitems){
 	}
 	if(is_null($list)!=1){
 
-		foreach($items as $item){
-
-			array_push($list, $item);
-		}
+		array_push($list, $items);
 		$Jlist=json_encode($list);
 		$status=new_item($connection,$user,$Jlist);
 	}else{
