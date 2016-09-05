@@ -32,4 +32,9 @@ $app->post('/list/{user}/add',function($request, $response, $args){
 	include_once '../lib/controller/listFunc.php';
 	return add_item($args['user'],$request->getParam('list'));
 });
+
+$app->post('/list/{user}/edit/{id}',function($request, $response, $args){
+    include_once '../lib/controller/listFunc.php';
+    return edit_item($args['id'],$args['user'],$request->getParam('list'));
+});
 ?>

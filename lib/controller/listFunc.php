@@ -12,7 +12,6 @@ function add_item($user,$Jitems){
 		return json_encode('db error');
 	}
 	if(is_null($list)!=1){
-
 		array_push($list, $items);
 		$Jlist=json_encode($list);
 		$status=new_item($connection,$user,$Jlist);
@@ -45,4 +44,39 @@ function get_item($user){
 		return json_encode('db error');
 	}
 
+}
+
+function edit_item($id,$user,$item){
+	include_once '../lib/model/db.php';
+	$connection=connect_db();
+	$Jlist=get_item($user);
+	$item=json_decode($item);
+	$list=json_decode($Jlist);
+	if($Jlist=='"db error"'){
+		return json_encode('db error');
+	}
+	$tempL=array();
+	if(is_null($Jlist)!=1){
+		foreach ($list as $items) {
+			if($id!=$items->{'id'}){
+				array_push($tempL,$items);
+				var_dump($items);
+			}
+		}
+		array_push($tempL,$item);
+		$tempL=json_encode($tempL);
+		// var_dump($tempL);
+		$status=new_item($connection,$user,$tempL);
+
+	}else{
+		return json_encode('error');
+					
+	}
+
+	if ($status){
+		return json_encode('success');
+	}
+	else{
+		return json_encode('db error');
+	}
 }
