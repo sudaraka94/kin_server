@@ -7,7 +7,7 @@ function add_item($user,$Jitems){
 
 	$list=json_decode($Jlist);
 	$items=json_decode($Jitems);
-	
+	$items->id=get_id($list);
 	if($Jlist=='"db error"'){
 		return json_encode('db error');
 	}
@@ -60,12 +60,10 @@ function edit_item($id,$user,$item){
 		foreach ($list as $items) {
 			if($id!=$items->{'id'}){
 				array_push($tempL,$items);
-				var_dump($items);
 			}
 		}
 		array_push($tempL,$item);
 		$tempL=json_encode($tempL);
-		// var_dump($tempL);
 		$status=new_item($connection,$user,$tempL);
 
 	}else{
@@ -79,4 +77,16 @@ function edit_item($id,$user,$item){
 	else{
 		return json_encode('db error');
 	}
+}
+
+function get_id($list){
+	$id=1;
+	$idList=array();
+	foreach ($list as $item) {
+		array_push($idList,$item->{'id'});
+	}
+	while(in_array($id, $idList)){
+		$id++;
+	}
+	return $id;
 }
