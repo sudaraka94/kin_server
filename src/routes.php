@@ -49,11 +49,11 @@ $app->get('/list/{item_id}/delete',function($request, $response, $args){
     return delete_item($args['item_id']);
 });
 
-// //this route is for checking the offer suggesting 
-// $app->get('/list/{user_id}/offer',function($request, $response, $args){
-//     include_once '../lib/controller/offerFunc.php';
-//     return match_discount_user($args['user_id']);
-// });
+//this route is for checking the offer suggesting 
+$app->get('/list/{user_id}/ideamart',function($request, $response, $args){
+    include_once '../lib/controller/offerFunc.php';
+    return match_discount_user($args['user_id']);
+});
 
 $app->get('/list/{user_id}/offer',function($request, $response, $args){
     include_once '../lib/controller/offerFunc.php';

@@ -1,10 +1,14 @@
 <?php
 //here goes the db access layer
 function connect_db(){
-	$server='localhost';
-	$user='root';
-	$password='19940829';
-	$database='kinDB';
+	$server='sql6.freemysqlhosting.net';
+	$user='sql6140317';
+	$password='r8ftrsjEtW';
+	$database='sql6140317';
+	// $server='localhost';
+	// $user='root';
+	// $password='19940829';
+	// $database='kinDB';
 	$connection=new mysqli($server,$user,$password,$database);
 	return 	$connection;
 
@@ -65,6 +69,7 @@ function new_entry($user_id,$list_id,$item_name,$quantity){
 function item_list($conn,$list_id){
 	$query="SELECT * FROM items WHERE list_id='".$list_id."' AND item_deleted='0'";
 	$result=Mysqli_query($conn,$query);
+	var_dump($result);
 	if(!$result){
 		return false;
 	}
