@@ -69,7 +69,7 @@ function new_entry($user_id,$list_id,$item_name,$quantity){
 function item_list($conn,$list_id){
 	$query="SELECT * FROM items WHERE list_id='".$list_id."' AND item_deleted='0'";
 	$result=Mysqli_query($conn,$query);
-	var_dump($result);
+	// var_dump($result);
 	if(!$result){
 		return false;
 	}
