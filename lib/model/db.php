@@ -1,10 +1,10 @@
 <?php
 //here goes the db access layer
 function connect_db(){
-	$server='sql6.freemysqlhosting.net';
-	$user='sql6140317';
-	$password='r8ftrsjEtW';
-	$database='sql6140317';
+	$server='localhost';
+	$user='root';
+	$password='19940829';
+	$database='kinDB';
 	$connection=new mysqli($server,$user,$password,$database);
 	return 	$connection;
 
@@ -52,7 +52,6 @@ function new_item($conn,$user,$items){
 function new_entry($user_id,$list_id,$item_name,$quantity){
 	$conn=connect_db();
 	$query="INSERT INTO items (user_id,list_id,item_name,quantity) VALUES ('".$user_id."','".$list_id."','".$item_name."','".$quantity."')";
-	echo $query;
 	$result=Mysqli_query($conn,$query);
 	if($result){
 		$r_id=mysqli_insert_id($conn);
@@ -93,7 +92,7 @@ function delete_item($item_id){
 function get_user_list($user_id){
 	$connection=connect_db();
 	$query="SELECT item_name FROM lists JOIN items on items.list_id=lists.list_id join user_relation on lists.familly_id=user_relation.family_id where user_relation.user_id=".$user_id;
-	$result=Mysqli_query($connection,$query);
+	$result=mysqli_query($connection,$query);
 	if(!$result){
 		return false;
 	}

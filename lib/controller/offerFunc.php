@@ -52,11 +52,13 @@ function match_offer_push($user_id){
         $offer_result=get_offers();
         while($offer_row=mysqli_fetch_assoc($offer_result)){
             similar_text($item_name,$offer_row['item_name'],$presentage);
-            if($presentage>70){
+            if($presentage>0){
                 $offer_array[]=$offer_row['notify_message'];
+//array('description'->$offer_row['notify_message']);
             }
         }
     }
+
     return json_encode($offer_array);
     
 }
@@ -72,7 +74,7 @@ function match_discount_push($user_id){
         while($offer_row=mysqli_fetch_assoc($offer_result)){
             similar_text($item_name,$offer_row['item_name'],$presentage);
             if($presentage>70){
-                $offer_array[]=$offer_row['notify_message'];
+                $offer_array[]=('description'->$offer_row['message']);
             }
         }
     }
