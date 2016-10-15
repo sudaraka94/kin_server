@@ -1,10 +1,10 @@
 <?php
 //here goes the db access layer
 function connect_db(){
-	$server='db4free.net';
-	$user='kinteam';
-	$password='kinserver';
-	$database='kindb';
+	$server='sql6.freemysqlhosting.net';
+	$user='sql6140317';
+	$password='r8ftrsjEtW';
+	$database='sql6140317';
 	$connection=new mysqli($server,$user,$password,$database);
 	return 	$connection;
 
@@ -49,19 +49,22 @@ function new_item($conn,$user,$items){
 	}
 }
 
-function new_entry($conn,$user,$items){
-	$query="INSERT INTO items (user_name,lists) VALUES ('".$user."','".$items."')";
+function new_entry($user_id,$list_id,$item_name,$quantity){
+	$conn=connect_db();
+	$query="INSERT INTO items (user_id,list_id,item_name,quantity) VALUES ('".$user_id."','".$list_id."','".$item_name."','".$quantity."')";
+	echo $query;
 	$result=Mysqli_query($conn,$query);
 	if($result){
-		return true;
+		$r_id=mysqli_insert_id($conn);
+		return json_encode($r_id);
 	}
 	else{
 		return false;
 	}
 }
 
-function item_list($conn,$user){
-	$query="SELECT lists FROM items WHERE user_name='".$user."'";
+function item_list($conn,$list_id){
+	$query="SELECT * FROM items WHERE list_id='".$list_id."' AND item_deleted='0'";
 	$result=Mysqli_query($conn,$query);
 	if(!$result){
 		return false;
@@ -71,4 +74,68 @@ function item_list($conn,$user){
 	}
 }
 
+function delete_item($item_id){
+	$connection=connect_db();
+	$query="UPDATE items SET item_deleted='1' WHERE item_id='".$item_id."'";
+	// return $query;
+	$result=Mysqli_query($connection,$query);
+	if(!$result){
+		return false;
+	}
+	else{
+		return 'success';
+	}
+
+
+}
+
+//getting all the lists belong to one user
+function get_user_list($user_id){
+	$connection=connect_db();
+	$query="SELECT item_name FROM lists JOIN items on items.list_id=lists.list_id join user_relation on lists.familly_id=user_relation.family_id where user_relation.user_id=".$user_id;
+	$result=Mysqli_query($connection,$query);
+	if(!$result){
+		return false;
+	}
+	else{
+		return $result;
+	}
+}
+
+//this returns the offers list
+function get_offers(){
+	$connection=connect_db();
+	$query='SELECT * FROM free_offer';
+	$result=Mysqli_query($connection,$query);
+	if(!$result){
+		return false;
+	}
+	else{
+		return $result;
+	}
+}
+
+function get_discounts(){
+	$connection=connect_db();
+	$query='SELECT * FROM discount';
+	$result=Mysqli_query($connection,$query);
+	if(!$result){
+		return false;
+	}
+	else{
+		return $result;
+	}
+}
+
+function get_tp($user_id){
+	$connection=connect_db();
+	$query='SELECT tp_num FROM user WHERE user_id='.$user_id;
+	$result=Mysqli_query($connection,$query);
+	if(!$result){
+		return false;
+	}
+	else{
+		return $result;
+	}
+}
 ?> 

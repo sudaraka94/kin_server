@@ -1,32 +1,40 @@
 <?php
 //this is the controller for manipulating the shopping list
+// function add_item($user,$Jitems){
+// 	include_once '../lib/model/db.php';
+// 	$connection=connect_db();
+// 	$Jlist=get_item($user);
+
+// 	$list=json_decode($Jlist);
+// 	$items=json_decode($Jitems);
+// 	$items->id=get_id($list);
+// 	if($Jlist=='"db error"'){
+// 		return json_encode('db error');
+// 	}
+// 	if(is_null($list)!=1){
+// 		array_push($list, $items);
+// 		$Jlist=json_encode($list);
+// 		$status=new_item($connection,$user,$Jlist);
+// 	}else{
+// 		$status=new_entry($connection,$user,$Jitems);
+					
+// 	}
+
+// 	if ($status){
+// 		return json_encode('success');
+// 	}
+// 	else{
+// 		return json_encode('db error');
+// 	}
+// }
 function add_item($user,$Jitems){
 	include_once '../lib/model/db.php';
 	$connection=connect_db();
 	$Jlist=get_item($user);
 
-	$list=json_decode($Jlist);
-	$items=json_decode($Jitems);
-	$items->id=get_id($list);
-	if($Jlist=='"db error"'){
-		return json_encode('db error');
-	}
-	if(is_null($list)!=1){
-		array_push($list, $items);
-		$Jlist=json_encode($list);
-		$status=new_item($connection,$user,$Jlist);
-	}else{
-		$status=new_entry($connection,$user,$Jitems);
-					
-	}
-
-	if ($status){
-		return json_encode('success');
-	}
-	else{
-		return json_encode('db error');
-	}
-} 
+	new_entry();
+	
+}  
 
 function get_item($user){
 	include_once '../lib/model/db.php';
@@ -89,4 +97,17 @@ function get_id($list){
 		$id++;
 	}
 	return $id;
+}
+
+
+function get_list($list_id){
+	include_once '../lib/model/db.php';
+	$connection=connect_db();
+	$result=item_list($connection,$list_id);
+	$iList = array();
+    while($row =mysqli_fetch_assoc($result))
+    {
+        $iList[] = $row;
+    }
+   	return json_encode($iList);
 }
